@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { getPosterUrl, getProfileUrl, getBackdropUrl } from '../../services/tmdbApi';
 import styles from './MovieDetailsPortal.module.css';
 
-const CastCard = ({ member }) => {
+const CastCard = memo(({ member }) => {
   const profileUrl = getProfileUrl(member.profile_path);
   return (
     <div className={styles.castCard}>
@@ -21,7 +21,7 @@ const CastCard = ({ member }) => {
       </div>
     </div>
   );
-};
+});
 
 const MovieDetailsPortal = ({ movie, credits, loading, error }) => {
   const navigate = useNavigate();

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPosterUrl } from '../../services/tmdbApi';
 import styles from './MovieCard.module.css';
@@ -54,4 +55,4 @@ const MovieCard = ({ movie }) => {
   );
 };
 
-export default MovieCard;
+export default memo(MovieCard);

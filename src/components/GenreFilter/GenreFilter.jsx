@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styles from './GenreFilter.module.css';
 
 const GenreFilter = ({ genres, selectedGenre, onGenreChange }) => {
@@ -25,4 +26,4 @@ const GenreFilter = ({ genres, selectedGenre, onGenreChange }) => {
   );
 };
 
-export default GenreFilter;
+export default memo(GenreFilter);

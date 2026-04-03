@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import GenreFilter from '../../components/GenreFilter/GenreFilter';
 import MovieCard from '../../components/MovieCard/MovieCard';
@@ -53,31 +53,31 @@ const HomePage = () => {
     fetchMovies(searchQuery, selectedGenre, currentPage);
   }, [fetchMovies, searchQuery, selectedGenre, currentPage]);
 
-  const handleSearch = (query) => {
+  const handleSearch = useCallback((query) => {
     setSearchQuery(query);
     setSelectedGenre(null);
     setCurrentPage(1);
-  };
+  }, []);
 
-  const handleGenreChange = (genreId) => {
+  const handleGenreChange = useCallback((genreId) => {
     setSelectedGenre(genreId);
     setSearchQuery('');
     setCurrentPage(1);
-  };
+  }, []);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
-  const getModeLabel = () => {
+  const modeLabel = useMemo(() => {
     if (searchQuery) return `Results for "${searchQuery}"`;
     if (selectedGenre) {
       const genre = genres.find((g) => g.id === selectedGenre);
       return genre ? `${genre.name} Movies` : 'Filtered Movies';
     }
     return 'Top Rated Movies';
-  };
+  }, [searchQuery, selectedGenre, genres]);
 
   return (
     <div className={styles.page}>
@@ -94,7 +94,7 @@ const HomePage = () => {
       <main className={styles.main}>
         <div className={styles.controls}>
           <div className={styles.controlsTop}>
-            <h2 className={styles.modeLabel}>{getModeLabel()}</h2>
+            <h2 className={styles.modeLabel}>{modeLabel}</h2>
           </div>
           <GenreFilter
             genres={genres}

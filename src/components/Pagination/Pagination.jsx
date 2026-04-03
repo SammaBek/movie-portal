@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styles from './Pagination.module.css';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -76,4 +77,4 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   );
 };
 
-export default Pagination;
+export default memo(Pagination);

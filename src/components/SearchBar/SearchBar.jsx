@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({ onSearch, initialValue = '' }) => {
@@ -39,4 +39,4 @@ const SearchBar = ({ onSearch, initialValue = '' }) => {
   );
 };
 
-export default SearchBar;
+export default memo(SearchBar);

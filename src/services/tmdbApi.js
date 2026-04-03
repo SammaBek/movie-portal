@@ -4,43 +4,50 @@ const IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 
 const fetchFromTMDB = async (endpoint, params = {}) => {
   const url = new URL(`${BASE_URL}${endpoint}`);
-  url.searchParams.set('api_key', API_KEY);
+
+  url.searchParams.set("api_key", API_KEY);
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== '') {
+    if (value !== undefined && value !== null && value !== "") {
       url.searchParams.set(key, value);
+      console.log("Fetching from TMDB:", url.toString());
     }
   });
 
   const response = await fetch(url.toString());
   if (!response.ok) {
-    throw new Error(`TMDB API error: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `TMDB API error: ${response.status} ${response.statusText}`,
+    );
   }
   return response.json();
 };
 
 export const getTopRatedMovies = (page = 1) =>
-  fetchFromTMDB('/movie/top_rated', { page });
+  fetchFromTMDB("/movie/top_rated", { page });
 
 export const searchMovies = (query, page = 1) =>
-  fetchFromTMDB('/search/movie', { query, page });
+  fetchFromTMDB("/search/movie", { query, page });
 
 export const getMoviesByGenre = (genreId, page = 1) =>
-  fetchFromTMDB('/discover/movie', { with_genres: genreId, sort_by: 'vote_average.desc', 'vote_count.gte': 100, page });
+  fetchFromTMDB("/discover/movie", {
+    with_genres: genreId,
+    sort_by: "vote_average.desc",
+    "vote_count.gte": 100,
+    page,
+  });
 
-export const getMovieDetails = (movieId) =>
-  fetchFromTMDB(`/movie/${movieId}`);
+export const getMovieDetails = (movieId) => fetchFromTMDB(`/movie/${movieId}`);
 
 export const getMovieCredits = (movieId) =>
   fetchFromTMDB(`/movie/${movieId}/credits`);
 
-export const getGenres = () =>
-  fetchFromTMDB('/genre/movie/list');
+export const getGenres = () => fetchFromTMDB("/genre/movie/list");
 
-export const getPosterUrl = (path, size = 'w500') =>
+export const getPosterUrl = (path, size = "w500") =>
   path ? `${IMAGE_BASE_URL}/${size}${path}` : null;
 
-export const getProfileUrl = (path, size = 'w185') =>
+export const getProfileUrl = (path, size = "w185") =>
   path ? `${IMAGE_BASE_URL}/${size}${path}` : null;
 
-export const getBackdropUrl = (path, size = 'w1280') =>
+export const getBackdropUrl = (path, size = "w1280") =>
   path ? `${IMAGE_BASE_URL}/${size}${path}` : null;
